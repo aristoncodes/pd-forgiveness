@@ -70,3 +70,92 @@ between strategies then come from their behaviour, not from luckier game lengths
 **Q: Where do the confidence intervals come from?**
 A bootstrap: resample the 50 repetitions with replacement 2,000 times, recompute the score
 each time, and take the 2.5th and 97.5th percentiles.
+
+## Noise and echo (M3)
+
+**Q: Why does TFT's payoff not keep falling as noise increases?**
+B4: once a single error has happened, TFT vs TFT wanders uniformly over CC, CD, DC, DD, so
+it averages 2.25 whatever ε is. More noise only gets it there faster.
+
+**Q: Why do unforgiving strategies win at ε = 0.2?**
+With 20 % random moves, a defection says almost nothing about intent. Forgiving it mostly
+rewards exploiters, and the cooperation being protected is mostly gone anyway.
+
+## Forgiveness dial and evolution (M4)
+
+**Q: The theory says g* = 1/3, you found 0.2–0.3. Is the theory wrong?**
+No. B5 is the most generosity a *population* can have while resisting invasion. Our measure
+is a tournament score against a fixed pool that includes ALLD, RAND and JOSS, which profit
+from every extra unit of generosity. The plateau (0.15–0.35) contains 1/3, and the separate
+B5 bound g = ½ against ALLD is reproduced exactly (F6b).
+
+**Q: Why does CTFT, not WSLS or GTFT, win evolution?**
+Evolution rewards doing well against whatever becomes common. CTFT fixes its own errors
+instantly and cannot be invaded by generous strategies: they forgive CTFT's justified
+punishments, while CTFT punishes their errors. At ε = 0.05, CTFT earns 2.907 against itself
+and the forgivers earn about 2.81 against CTFT. WSLS loses to ALLD (B6). This matches Boyd
+(1989).
+
+**Q: What is B6 and why is it interesting?**
+WSLS alternates C/D against ALLD, giving ALLD (T+P)/2 = 3 = R. ALLD is then neutral among
+WSLS players and wins outright against itself, so it takes over. Lowering T to 4.5 makes
+(T+P)/2 = 2.75 < 3, and WSLS repels it. A tiny payoff change flips the outcome, as the
+algebra predicts (F7b).
+
+**Q: What is the "critical mass" for TFT?**
+The share of TFT above which it beats ALLD: x* = (d−b)/((a−c)+(d−b)) from the 2×2 payoff
+matrix. At δ = 0.99 it is only 0.51 % without noise, but 5.1 % at ε = 0.05. That is why 5 % TFT
+invades at low noise and fails at ε = 0.05.
+
+**Q: Why no cycles?**
+Replicator dynamics without mutation cannot bring back an extinct strategy. Cycles like
+ALLC → ALLD → TFT need mutation (a stretch goal).
+
+## Shadow of the future (M5)
+
+**Q: Why is the transition a ramp, not a sharp step at 0.5 or 0.667?**
+B1/B2 say when cooperation *can* be an equilibrium. Our populations start from a uniform mix
+and evolve; near the thresholds several outcomes are possible, so the average over 30 seeds
+is intermediate. The ramp sits inside the predicted band (50 % cooperation at δ ≈ 0.57).
+
+**Q: How do you know it is not a coincidence?**
+F10: change T and the thresholds move as the formulas say. T = 4.5 switches on at about 0.5
+(B2 = 0.5); T = 5.9 needs about 0.9 (B2 = 0.97).
+
+## Original strategies (M6)
+
+**Q: Your Reputation Tracker wins the tournament. Is it the best strategy?**
+Not in evolution. It ties with GTFT for first in tournaments, but CTFT invades it (3.035
+against REP vs REP's 2.947 against itself). Tournament ranking measures performance against
+a fixed field; evolutionary stability measures resistance to invasion. They differ.
+
+**Q: Why did Grudger with Amnesty do worse than GRIM?**
+Parole requires cooperating while being punished. Retaliators never do, so GWA ≈ GRIM
+against them. Unconditional cooperators always do, and GRIM was exploiting them after noise
+triggered it (GRIM vs ALLC 4.40). GWA pardons them and loses that income (3.25).
+
+**Q: Why did Adaptive Forgiver underperform GTFT?**
+It estimates "accidental vs deliberate" from the opponent's defections, but when AF itself
+punishes, the opponent's retaliation looks deliberate. Its forgiveness drops exactly when
+it should forgive, so it gets stuck in echoes, e.g. against JOSS (1.85 vs GTFT's 2.56).
+
+**Q: Weren't you tempted to change predictions after seeing results?**
+The RQ7 predictions were committed (commit d1ba747) before E7 ran; Git timestamps prove it.
+Three of AF's and GWA's predictions failed, and we report that.
+
+## Robustness and limitations (M6–M7)
+
+**Q: Do results depend on which strategies you included?**
+Rankings do; conclusions don't. In four pools (full, nice only, many exploiters, random 8),
+forgivers beat TFT under noise, GRIM collapses, and unforgiving strategies win at ε = 0.2
+(F11).
+
+**Q: Why T = 5.9 instead of T = 6?**
+T = 6 with R = 3, S = 0 gives 2R = T + S, so it is not a strict Prisoner's Dilemma. At
+T = 5.9 we even *see* the problem: alternating C/D pays almost as much as cooperating, and
+alternating populations appear.
+
+**Q: What are the main limitations?**
+Infinite-population replicator dynamics (no drift; the Moran process was not done);
+implementation noise only (no perception noise); no mutation; tournament rankings depend
+on the pool; strategies are hand-designed rather than evolved.

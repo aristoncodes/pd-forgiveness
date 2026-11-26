@@ -135,3 +135,94 @@ orange, aqua, …) and a single-hue blue ramp for heatmaps; captions state every
 *Why:* PRD 11.1 asks for colour-blind-safe figures with parameter captions. A single-hue ramp
 reads light = low, dark = high without a legend lookup. In F2, colour encodes a property
 (nice vs not nice) that the RQ1 argument depends on.
+
+---
+
+## M3–M5: Noise, echo, forgiveness dial, evolution, shadow of the future
+
+**D23. Every point of a sweep uses the same base seed.**
+*Why:* game lengths are then identical across ε (and across g in E4), and the noise
+uniforms are the same random numbers compared against a different ε. Differences between
+sweep points come from the parameter, not from luck: common random numbers across the
+sweep.
+
+**D24. Noise axes use a "symlog" scale: linear near 0, logarithmic above 0.005.**
+*Why:* the PRD asks for a log x-axis, but ε = 0 (the no-noise baseline) cannot sit on a
+log scale.
+
+**D25. E3 also includes CTFT and GTFT self-play** (the PRD names TFT and WSLS).
+*Why:* it costs under a second and shows which error-correcting mechanism is best (CTFT).
+
+**D26. E4 replaces the pool's GTFT(1/3) with GTFT(g)** rather than adding a second GTFT.
+*Why:* "GTFT(g) in the full pool" then means the same 11-strategy pool at every g, and the
+GTFT slot keeps its index, so all opponents' matches use the same seeds across g (D17). A
+second panel at δ = 0.9 shows how the optimum shifts in shorter games (PRD B5).
+
+**D27. Replicator dynamics never zeroes small shares; 1e-6 is only the threshold for
+*reporting* a strategy as extinct.**
+*Why:* zeroing would change the dynamics and could hide a slow comeback. The PRD's
+"shares below 1e-6 count as extinct" is applied to the survivor tables.
+
+**D28. Extra evolution scenario `wsls_resident` (WSLS 99 %, ALLD 1 %) and an
+invasion-threshold table in E5.**
+*Why:* the PRD's B6 test ("rerun E5 with T = 4.5") needs a WSLS population to test whether
+ALLD can invade it. In the uniform start WSLS is never resident, so the test would be
+indirect. The threshold table (critical share from the 2×2 sub-matrix,
+x* = (d−b)/((a−c)+(d−b))) turns the B3 and B6 arguments into numbers that can be checked.
+
+**D29. E6 uses a finer δ grid (adds 0.45, 0.55, 0.65, 0.75, 0.85) and 30 independent seeds
+per point.**
+*Why:* the PRD's grid has only 0.5, 0.6 and 0.7 inside the predicted transition
+[0.5, 0.667]. The PRD asks for means and CIs over ≥ 30 runs, so each point repeats the whole
+pipeline (tournament + evolution) with 30 different seeds. Each run starts from a uniform
+population (the PRD does not specify; uniform is its default). 2,000 generations, because
+short games converge more slowly.
+
+## M6: Originals and robustness
+
+**D30. Original strategy designs** (full rationale in each docstring):
+- *AF*: forgiveness g = ½·(surprise Ds + 1)/(all Ds + 2). The PRD's idea ("estimate the
+  noise rate, set forgiveness to match") needs an observable proxy. The share of the
+  opponent's defections that came "out of nowhere" after mutual cooperation is one. The cap
+  ½ is B5's anti-ALLD bound; the +1/+2 prior starts at "half accidental".
+- *GWA*: k = 5, m = 3 as in the prompt. Punishment blocks are re-evaluated every k rounds.
+- *PF*: "never retaliated" = no D in rounds 3–4 (the replies to the round-2 probe).
+  Exploitation stops the first time the victim defects.
+- *REP*: α = 0.2 and threshold 0.5 as in the prompt; reputation starts at 1 (trust).
+
+**D31. The originals are appended after the 11 known strategies in E7's pool.**
+*Why:* with index-keyed seeds (D17), every match between known strategies in E7 is
+identical to E2, so differences come only from adding the originals.
+
+**D32. RQ7 predictions were committed (d1ba747) after the originals' unit tests passed but
+before E7 ran.**
+*Why:* the PRD requires predictions before testing. Unit tests only check rules on scripted
+opponents and say nothing about performance.
+
+**D33. T = 5.9 instead of the PRD's T = 6 in the payoff robustness check.**
+*Why:* with R = 3 and S = 0, T = 6 gives 2R = T + S. That violates the strict PD condition
+2R > T + S, and `Payoffs` rejects it. T = 5.9 is the closest valid value and still tests
+"stronger temptation". R2's results show why the condition matters: at T = 5.9 alternation
+pays (T+S)/2 = 2.95 ≈ R, and half-cooperative alternating populations appear.
+
+**D34. Robustness pools.** *Nice only:* the 7 nice known strategies. *Many exploiters:*
+6 exploiters (ALLD, STFT, RAND, JOSS at 10/30/50 % sneak rates) vs 5 reciprocators, using
+parameter variants instead of duplicates so labels stay unique. *Random 8:* drawn
+reproducibly with `default_rng(7)` from the 11 known strategies.
+
+**D35. Not done (PRD stretch goals):** Moran process, perception noise, Zero-Determinant
+strategy, mutation, dashboard.
+*Why:* the core experiments, originals and two robustness checks came first, as the PRD
+requires. These are the natural next steps; see `report/outline.md` → Limitations.
+
+## M7: Reproducibility
+
+**D36. Figures are saved without a PDF creation timestamp.**
+*Why:* with the timestamp, re-running `make_figures.py` changed every PDF even though
+nothing else changed. Now the whole pipeline is byte-for-byte reproducible. Verified: a
+clean `python run.py all` reproduced every file in `results/` exactly (117 s on an Apple M3,
+8 cores).
+
+**D37. Ruff rule C408 (`dict(a=1)` → `{"a": 1}`) is disabled.**
+*Why:* keyword-style `dict(...)` reads better in the many result-row constructions. A
+style preference, not a correctness issue.

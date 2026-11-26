@@ -107,8 +107,9 @@ def save(fig, name: str, caption: str) -> None:
     # placed below the axes (negative y); bbox_inches="tight" grows the canvas to include it
     fig.text(0.01, -0.01, textwrap.fill(caption, 125), fontsize=8, color=MUTED, va="top")
     FIGURES.mkdir(exist_ok=True)
-    for ext in ("png", "pdf"):
-        fig.savefig(FIGURES / f"{name}.{ext}", bbox_inches="tight")
+    fig.savefig(FIGURES / f"{name}.png", bbox_inches="tight")
+    # no creation timestamp, so re-running produces byte-identical PDFs
+    fig.savefig(FIGURES / f"{name}.pdf", bbox_inches="tight", metadata={"CreationDate": None})
     plt.close(fig)
     print(f"  wrote figures/{name}.png/.pdf")
 

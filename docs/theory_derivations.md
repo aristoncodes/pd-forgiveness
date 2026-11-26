@@ -98,3 +98,24 @@ So with default payoffs ALLD does **exactly as well** as WSLS inside a WSLS popu
 is neutral and can drift in. WSLS is strictly stable only if **R > (T+P)/2**. With T = 4.5:
 (4.5 + 1)/2 = 2.75 < 3, so WSLS becomes strictly stable. **Test in M4:** rerun evolution with
 T = 4.5 and compare.
+
+---
+
+## Extra: critical mass (used for B3 and B6 checks)
+
+With two strategies and payoff matrix [[a, b], [c, d]] (rows/cols = strategy 1, strategy 2),
+strategy 1 at share x has fitness x·a + (1−x)·b, and strategy 2 has x·c + (1−x)·d. Strategy 1
+does better exactly when
+
+**x > x* = (d − b) / ((a − c) + (d − b))**.
+
+**TFT vs ALLD** (per-round payoffs at δ, from `theory.tft_alld_matrix`): a = R = 3,
+b = (1−δ)S + δP, c = (1−δ)T + δP, d = P = 1. At δ = 0.99: b = 0.99, c = 1.04, so
+x* = 0.01/1.97 ≈ **0.51 %**. A tiny cluster of TFT can take over an ALLD world, but a single
+mutant in an infinite population cannot (B3). The simulated matrix gives 0.53 %. Noise
+raises it (1.2 % at ε = 0.01, 5.1 % at ε = 0.05) because TFT earns less against itself.
+
+**WSLS vs ALLD:** with T = 5, a = 3, c = (T+P)/2 = 3, b = 0.5, d = 1, so
+x* = 0.5/(0 + 0.5) = 1: WSLS would need 100 % of the population (neutral to first order;
+ALLD wins on the second-order term). With T = 4.5, c = 2.75, so x* = 0.5/(0.25 + 0.5) = 2/3.
+WSLS resists as long as ALLD has under 1/3 of the population.
