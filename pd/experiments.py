@@ -426,8 +426,9 @@ def e7(cfg: dict, out: Path) -> None:
     """E7 original strategies: rerun E2 (noise), E5 (evolution) and E6 (shadow of the
     future, on a finer epsilon grid for the niche map F9) with the originals added."""
     pool, pay = cfg["pool"], payoffs(cfg)
-    scores, _ = noise_sweep(pool, pay, cfg["delta"], cfg["epsilons"], cfg["n_reps"], cfg["seed"])
+    scores, mats = noise_sweep(pool, pay, cfg["delta"], cfg["epsilons"], cfg["n_reps"], cfg["seed"])
     scores.to_csv(out / "noise_scores.csv", index=False)
+    mats.to_csv(out / "noise_matrices.csv", index=False)
     save_table(rank_table(scores), out / "noise_rank_by_epsilon")
     print(rank_table(scores).to_string(index=False))
 
