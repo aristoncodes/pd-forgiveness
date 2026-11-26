@@ -73,6 +73,7 @@ report/
   report.md            the written report (source; edit this)
   report.pdf           built report (A4, 15 pages + appendices)
   report.docx          the same report as an editable Word file
+  presentation.pptx    the 16-slide presentation (13 + 3 backup) with speaker notes
   build_report.py      report.md → report.pdf (needs Google Chrome)
   build_docx.js        → report.docx (needs Node and `npm install docx`)
   outline.md           report structure
