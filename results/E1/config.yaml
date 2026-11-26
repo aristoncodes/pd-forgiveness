@@ -1,0 +1,20 @@
+experiment: E1
+description: Baseline round-robin tournament without noise (RQ1)
+# Known strategies (PRD 5.1 + 5.2). Original strategies join the pool in E7.
+pool:
+  - ALLC
+  - ALLD
+  - RAND
+  - TFT
+  - GRIM
+  - {code: GTFT, g: 0.3333333333}
+  - TF2T
+  - WSLS
+  - STFT
+  - CTFT
+  - JOSS
+payoffs: {T: 5, R: 3, P: 1, S: 0}
+delta: 0.99      # mean game length 100 rounds
+epsilon: 0.0     # no noise
+n_reps: 50
+seed: 42

@@ -2,6 +2,7 @@
 
 Read in this order to prepare for the presentation:
 
+0. `PRD.md`: the full project spec (Markdown version of the PDF).
 1. `glossary.md`: the vocabulary (nice, retaliatory, δ, ε, replicator dynamics, …).
 2. `theory_derivations.md`: benchmarks B1–B6, derived step by step.
 3. `M1_engine_and_strategies.md` … `M7_*.md`: one file per milestone covering what was
