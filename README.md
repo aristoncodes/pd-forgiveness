@@ -85,7 +85,6 @@ report/
 node report/build_docx.js                 # writes report.docx (after `npm install docx` once)
 ```
 
-Fill in `[Author name]` and `[Course name]` on the first line of `report.md` first.
 
 ## Add a new strategy
 

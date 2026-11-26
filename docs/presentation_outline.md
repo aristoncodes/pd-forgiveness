@@ -4,7 +4,7 @@ One message per slide. Every number comes from `notes/findings.md`.
 
 | # | Title | Show | Say (the one sentence to land) |
 |---|---|---|---|
-| 1 | Does forgiveness pay? | Title, your name, one-line answer: "Yes, when mistakes are rare, in moderate doses, and contrition beats generosity." | Repeated PD with noise and evolution, tested against six theory benchmarks. |
+| 1 | Does forgiveness pay? | Title; "Aditya Yadav · Game Theory · Instructor: Akash Chauhan"; one-line answer: "Yes, when mistakes are rare, in moderate doses, and contrition beats generosity." | Repeated PD with noise and evolution, tested against six theory benchmarks. |
 | 2 | The dilemma and the shadow of the future | Payoff table (T=5, R=3, P=1, S=0); δ = continuation probability, mean 1/(1−δ) rounds | Defecting wins any single round; only the future makes cooperation rational. |
 | 3 | Why noise matters | F5 (move traces) | One accidental D makes TFT echo forever; WSLS repairs it in two rounds. |
 | 4 | Method | Pipeline diagram (docs/M7_wrap_up.md); 11 known + 4 original strategies; 50 reps, 95 % CIs, fixed seeds, 54 tests | We trust the code because it reproduces exact answers first (TFT vs ALLD = 0.9 / 1.4). |

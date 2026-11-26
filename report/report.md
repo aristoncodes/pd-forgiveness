@@ -1,6 +1,6 @@
 # Does Forgiveness Pay? Cooperation in the Repeated Prisoner's Dilemma under Noise and Evolution
 
-[Author name] · [Course name] · Track B (Computational / Simulation) · November 2026
+Aditya Yadav · Game Theory · Instructor: Akash Chauhan · Track B (Computational / Simulation) · November 2026
 
 Code, data and figures: the `pd-forgiveness` repository. Every number in this report is read from a saved result file, and the whole study is reproduced by `python run.py all && python analysis/make_figures.py` (about two minutes on a laptop).
 
