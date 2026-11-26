@@ -33,4 +33,5 @@ Read in this order to prepare for the presentation.
 - `../figures/`: all plots (PNG for slides, PDF for the report).
 - `../results/*/`: raw CSVs plus Markdown tables (`ranking.md`, `best_g.md`,
   `survivors.md`, `invasion_thresholds.md`, …) to quote numbers from.
+- `../report/report.pdf` / `report.docx`: **the written report** (source: `report.md`).
 - `../report/outline.md`: the report skeleton.

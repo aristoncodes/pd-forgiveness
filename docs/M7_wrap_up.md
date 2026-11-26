@@ -29,3 +29,11 @@ predictions commit comes before the E7 results commit.
 ## What is not done (PRD stretch goals)
 Moran process, perception noise, Zero-Determinant extortioner, mutation, dashboard. See
 `report/outline.md` → Limitations for how each would extend the results.
+
+## The written report
+`report/report.md` is the source. `python report/build_report.py` builds `report.pdf` with
+headless Chrome: 15 pages of main text including references, plus 4 pages of appendices.
+`node report/build_docx.js` builds `report.docx`, which passes OOXML schema validation.
+Figures keep their repository names (Figure F3 = `figures/F3_noise_sweep.png`), so the
+report, the slides and the files always match. Every number in the report was checked
+against `notes/findings.md` and the result files.

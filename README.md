@@ -69,8 +69,23 @@ results/<ID>/          raw CSVs + Markdown summaries + config copy
 figures/               F1–F11 as PNG and PDF
 notes/                 predictions.md (written before experiments), findings.md
 docs/                  study folder: PRD, decisions, derivations, milestone notes, Q&A, slides
-report/outline.md      report structure
+report/
+  report.md            the written report (source; edit this)
+  report.pdf           built report (A4, 15 pages + appendices)
+  report.docx          the same report as an editable Word file
+  build_report.py      report.md → report.pdf (needs Google Chrome)
+  build_docx.js        → report.docx (needs Node and `npm install docx`)
+  outline.md           report structure
 ```
+
+## Rebuild the report after editing `report/report.md`
+
+```bash
+.venv/bin/python report/build_report.py   # writes report.pdf
+node report/build_docx.js                 # writes report.docx (after `npm install docx` once)
+```
+
+Fill in `[Author name]` and `[Course name]` on the first line of `report.md` first.
 
 ## Add a new strategy
 
