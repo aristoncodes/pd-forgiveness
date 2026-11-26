@@ -7,3 +7,6 @@ line-length = 100
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff.lint]
+ignore = ["C408"]  # dict(a=1) keyword style is kept for readability

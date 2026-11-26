@@ -1,7 +1,7 @@
 """Run experiments from their configs.
 
     python run.py E1        # one experiment
-    python run.py all       # every experiment, in order
+    python run.py all       # every experiment (E1-E7), then robustness checks (R1-R2)
 
 Each experiment reads configs/e<N>_*.yaml and writes results/<ID>/ with a copy of the config.
 """
@@ -41,7 +41,7 @@ def run(exp_id: str) -> None:
 
 
 def all_ids() -> list[str]:
-    return sorted(p.name.split("_")[0].upper() for p in (ROOT / "configs").glob("e*_*.yaml"))
+    return sorted(p.name.split("_")[0].upper() for p in (ROOT / "configs").glob("[er]*_*.yaml"))
 
 
 if __name__ == "__main__":

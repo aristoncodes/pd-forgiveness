@@ -4,6 +4,8 @@ always compared on identical numbers. Derivations are in docs/theory_derivations
 
 from __future__ import annotations
 
+import numpy as np
+
 from .game import Payoffs
 
 DEFAULT = Payoffs()  # Axelrod payoffs (T, R, P, S) = (5, 3, 1, 0); frozen, safe to share
@@ -55,3 +57,25 @@ def alld_vs_wsls(p: Payoffs = DEFAULT) -> float:
 def wsls_strictly_stable(p: Payoffs = DEFAULT) -> bool:
     """B6. WSLS resists ALLD strictly only if R > (T + P) / 2."""
     return p.R > alld_vs_wsls(p)
+
+
+def tft_alld_matrix(delta: float, p: Payoffs = DEFAULT) -> np.ndarray:
+    """B3. Average per-round payoffs of TFT and ALLD against each other, rows/cols [TFT, ALLD].
+
+    TFT vs ALLD: S in round 1, then P: (1 - delta) S + delta P per round.
+    ALLD vs TFT: T in round 1, then P: (1 - delta) T + delta P per round.
+    """
+    return np.array(
+        [[p.R, (1 - delta) * p.S + delta * p.P], [(1 - delta) * p.T + delta * p.P, p.P]]
+    )
+
+
+def invasion_threshold(M: np.ndarray) -> float:
+    """Critical starting share of strategy 0 against strategy 1 in a 2-strategy population.
+
+    With M = [[a, b], [c, d]], strategy 0 does better exactly when its share x satisfies
+    x a + (1 - x) b > x c + (1 - x) d, i.e. x > (d - b) / ((a - c) + (d - b)).
+    Below the threshold replicator dynamics goes to all-1, above it to all-0 (bistability).
+    """
+    (a, b), (c, d) = M
+    return (d - b) / ((a - c) + (d - b))
